@@ -1,37 +1,53 @@
-import React from 'react';
-import {Switch, Route, Redirect} from 'react-router-dom';
-import LoginPage from './pages/LoginPage/Login';
-import RegisterPage from './pages/RegisterPage/Register';
 import {DashboardPage} from './pages/Dashboard';
-import {ProfilePage} from './pages/Profile';
+import ProfilePage from './pages/Profile';
+import LoginPage from './pages/Login';
+import {RegisterPage} from './pages/Register';
 import WelcomePage from './pages/Welcome'; 
+import { Vacabulary } from './pages/Vocabulary';
+import { ABOUT_ROUTE, ADMIN_ROUTE, DASHBOARD_ROUTE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, VOCABULARY_ROUTE} from "./utils/consts";
 
-export const useRoutes = isAuthenticated => {
-	if (isAuthenticated){
-		return (
-			<Switch>
-				<Route path="/dashboard" exact>
-					<DashboardPage/>
-				</Route>
-				<Route path="/profile/:id" >
-					<ProfilePage/>
-				</Route>
-				<Redirect to="/dashboard"/>
-			</Switch>
-		)
+export const authRoutes = [
+	{
+		path: ADMIN_ROUTE,
+		Component: WelcomePage
+	},
+	{
+		path: DASHBOARD_ROUTE,
+		Component: DashboardPage
+	},
+	{
+		path: PROFILE_ROUTE,
+		Component: ProfilePage
+	},
+	{
+		path: ABOUT_ROUTE,
+		Component: WelcomePage
+	},
+	{
+		path: VOCABULARY_ROUTE,
+		Component: Vacabulary
 	}
-	return (
-		<Switch>
-			<Route path="/account/login" exact>
-				<LoginPage/>
-			</Route>
-			<Route path="/account/reg" exact>
-				<RegisterPage/>
-			</Route>
-			<Route path="/" exact>
-				<WelcomePage/>
-			</Route>
-			<Redirect to="/"/>
-		</Switch>
-	)
-}
+]
+
+export const publicRoutes = [
+	{
+		path: LOGIN_ROUTE,
+		Component: LoginPage
+	},
+	{
+		path: REGISTRATION_ROUTE,
+		Component: RegisterPage
+	},
+	{
+		path: HOME_ROUTE,
+		Component: WelcomePage
+	},
+	{
+		path: ABOUT_ROUTE,
+		Component: WelcomePage
+	},
+	{
+		path: PROFILE_ROUTE + '/:id',
+		Component: ProfilePage
+	}
+]

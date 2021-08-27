@@ -10,35 +10,27 @@ const port = process.env.PORT || 5000;
 const app = express();
 
 // Set up
-const allowedOrigins = ["http://localhost:3000", "http://localhost:8080"]
-app.use(
-    cors({
-        origin: function(origin, callback) {
-            if (!origin) return callback(null, true);
-            if (allowedOrigins.indexOf(origin) === -1) {
-                var msg =
-                    "The CORS policy for this site does not " +
-                    "allow access from the specified Origin.";
-                return callback(new Error(msg), false);
-            }
-            return callback(null, true);
-        }
-    })
-);
+app.use(cors());
 app.use(express.json({limit: "30mb", extended: true}));
 
 // Routes
-app.use('/account', require('./routes/account'))
-app.get('/', (req, res) => {
-	res.json({'data':'important data'});
-});
+app.use('/api', require('./routes/routes'))
 
 // MongoDB
-mongoose.connect(process.env.URI, { useUnifiedTopology: true, useNewUrlParser: true })
-.then((res) => console.log('Succes connection with MongoDB'))
-.catch(err => console.log(err))
+async function start() {
+    try{
+        await mongoose.connect(process.env.URI, { 
+            useUnifiedTopology: true, 
+            useNewUrlParser: true, 
+            useCreateIndex: true})
+        console.log('Succes connection with MongoDB')
+        // Start server
+        app.listen(port, '127.0.0.1', () => {
+            console.log(`Run server in port ${port}`);
+        });
+    }catch(error){
+        console.log(error)
+    }
+}
 
-// Start server
-app.listen(port, '127.0.0.1', () => {
-	console.log(`Run server in port ${port}`);
-});
+start();
