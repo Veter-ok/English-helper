@@ -12,8 +12,13 @@ const UserShema = mongoose.Schema({
 	password: {
 		type: String
 	},
-	words: {
-		type: Array
+	know: {
+		type: Map,
+		of: String
+	},
+	learn: {
+		type: Map,
+		of: String
 	}
 });
 

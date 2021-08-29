@@ -18,12 +18,13 @@ export const App = observer(() => {
         "email": jwt_decode(localStorage.getItem("token")).email,
         "password": jwt_decode(localStorage.getItem("token")).password
       })
-      }).then(json => {
-        return json.json()
-      }).then(data => {
+      }).then(json => json.json())
+      .then(data => {
         if (data.status){
           user.setIsAuth(true);
           user.setUser(data.user);
+          user.setKnow(data.know);
+          user.setLearn(data.learn)
         }
       })
       .catch(error => console.log(error));

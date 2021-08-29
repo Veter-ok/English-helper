@@ -14,10 +14,22 @@ class Vacabulary {
 		});
 	}
 
-	async add_word(req, res){
-		const {word, translation, user} = req.body
-		User.updateOne({words: user.words}, {user: user.words.push({word: translation})}, function(err, result){
-			return res.json({status: true})
+	async add_know(req, res){
+		const {word, translation, words, user} = req.body
+		console.log(req.body)
+		const new_words = words
+		new_words[word] = translation
+		User.updateOne({email: user.email}, {know: new_words}, function(err, result){
+			return res.json({status: true, words: new_words})
+		});
+	}
+
+	async add_learn(req, res){
+		const {word, translation, words, user} = req.body
+		const new_words = words
+		new_words[word] = translation
+		User.updateOne({email: user.email}, {learn: new_words}, function(err, result){
+			return res.json({status: true, words: new_words})
 		});
 	}
 }

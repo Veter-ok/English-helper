@@ -8,6 +8,7 @@ router.post('/user/reg', userConstroller.registration)
 router.post('/user/edit_user', userConstroller.edit)
 router.post('/user/auth', userConstroller.check)
 router.post('/vacabulary/search', vacabularyConstroller.search_word)
-router.post('/vacabulary/add', vacabularyConstroller.add_word)
+router.post('/vacabulary/add_know', vacabularyConstroller.add_know)
+router.post('/vacabulary/add_learn', vacabularyConstroller.add_learn)
 
 module.exports = router

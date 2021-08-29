@@ -45,6 +45,12 @@ export const Vacabulary = () => {
 
 	const classes = useStyles();
 
+	const validator = (event) => {
+		var i = event.target.value
+		i = i.replace(/[^A-Za-z]/g, '')
+		setWord(i)
+	}
+
 	const searchWord = async (event) => {
 		event.preventDefault();
 		setStatusSearch(true);
@@ -66,20 +72,42 @@ export const Vacabulary = () => {
 		.catch(error => console.log(error));
 	}
 
-	const addWord = async (event) => {
+	const know = async (event) => {
 		event.preventDefault()
-		console.log(user.user.words)
-		await fetch(process.env.REACT_APP_API_URL + '/vacabulary/add', {
+		alert(word)
+		await fetch(process.env.REACT_APP_API_URL + '/vacabulary/add_know', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
 				"word": word,
 				"translation": translation,
-				"user": user.user
+				"user": user.user,
+				"words": user.know
 			})
 		}).then(json => json.json())
 		.then(data => {
-			console.log(data)
+			if (data.status){
+				user.setKnow(data.words)
+			}
+		})	
+	}
+
+	const learn = async (event) => {
+		event.preventDefault()
+		await fetch(process.env.REACT_APP_API_URL + '/vacabulary/add_learn', {
+			method: 'post',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				"word": word,
+				"translation": translation,
+				"user": user.user,
+				"words": user.learn
+			})
+		}).then(json => json.json())
+		.then(data => {
+			if (data.status){
+				user.setLearn(data.words)
+			}
 		})	
 	}
 
@@ -89,7 +117,7 @@ export const Vacabulary = () => {
 				<Container className={classes.root} maxWidth="sm">
 					<Paper className={classes.paper}>
 						<div className={classes.inputBox} >
-							<TextField required fullWidth className={classes.inputText} id="standard-required" label="Required" value={word} onChange={(e) => setWord(e.target.value)}/>
+							<TextField required fullWidth className={classes.inputText} id="standard-required" label="Required" value={word} onChange={validator}/>
 							<Button onClick={searchWord} className={classes.buttonTransalte} variant="contained"style={{fontSize: 12}}>Перевести</Button>
 						</div>
 						{
@@ -110,11 +138,19 @@ export const Vacabulary = () => {
 							<Paper className={classes.translatePaper}>
 								<h2>Перевод</h2> 
 								<p>{translation}</p>
-								<Tooltip title="Add" aria-label="add">
+								<Button variant="contained" color="secondary" onClick={learn} className={classes.button_style_1}>Учить</Button>
+              					{/* {
+									statusProcess ?
+									<CircularProgress className={classes.circularProgress}  color="secondary" />
+									:
+									<div></div>
+	            				} */}
+              					<Button variant="contained" color="primary" onClick={know} className={classes.button_style_2}>Знаю</Button>
+								{/* <Tooltip title="Add" aria-label="add">
         							<Fab color="primary" className={classes.fab} onClick={addWord}>
           								<AddIcon />
         							</Fab>
-      							</Tooltip>
+      							</Tooltip> */}
 							</Paper>
 						</Grid>
 						<Grid item xs={12} sm={4}>

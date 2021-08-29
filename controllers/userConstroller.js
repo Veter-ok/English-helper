@@ -1,7 +1,8 @@
 const User = require('../model/User');
 const jwt = require("jsonwebtoken");
+const jwt_decode = require('jwt-decode');
+
 const bcrypt = require('bcrypt');
-const { response } = require('express');
 
 class UserController {
 	async registration(req, res){
@@ -21,7 +22,8 @@ class UserController {
 			name: name,
 			email: email,
 			password: hashPassword,
-			words: {}
+			know: {},
+			learn: {}
 		});
 		await newUser.save()
 		return res.json({status: true});
@@ -37,16 +39,17 @@ class UserController {
 			const isMath = await User.cheakPassword(password, user.password);
 			if (isMath){
 				const token = jwt.sign(
-					{id: user._id, email: email, name: user.name, password: password},
+					{email: email, name: user.name, password: password},
 					process.env.SECRET_KEY,
 					{expiresIn: '12h'});
 				const newUser = {
+					token: token,
+					id: user._id,
 					email: email,
 					name: user.name,
 					password: password,
-					words: user.words
 				}
-				return res.json({status: true, token: token, user: newUser});
+				return res.json({status: true, token: token, user: newUser, know: user.know, learn: user.learn});
 			}else{
 				return res.json({status: false, msg: 'неверный пароль'});
 			}
@@ -68,10 +71,9 @@ class UserController {
 				id: userDB._id,
 				email: userDB.email,
 				name: userDB.name,
-				password: password,
-				words: userDB.words
+				password: password
 			}
-			res.json({status: true, user: user})
+			res.json({status: true, user: user, know: userDB.know, learn: userDB.learn})
 		}
 	}
 

@@ -60,7 +60,7 @@ export const RegisterPage = observer(() => {
 				<Paper elevation={3} variant="outlined" className={classes.paper}>
 					<h1>Регестрация</h1>
 					<p className="error-msg">{error_msg}</p>
-					<TextField fullWidth required className={classes.specialInputText} label="Электронная почта" value={name} onChange={(e) => setName(e.target.value)}/>
+					<TextField fullWidth required className={classes.specialInputText} label="Имя" value={name} onChange={(e) => setName(e.target.value)}/>
 					<TextField fullWidth required className={classes.specialInputText} label="Электронная почта" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
 					<TextField fullWidth className={classes.specialInputText} label="Пароль" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)}/>
 					<TextField className={classes.specialInputText} fullWidth label="Пароль" type="password" autoComplete="current-password" value={password2} onChange={(e) => setPassword2(e.target.value)}/>

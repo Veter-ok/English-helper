@@ -5,7 +5,7 @@ import Header from '../components/header';
 import { AuthContext } from '../index';
 import {useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { DASHBOARD_ROUTE, REGISTRATION_ROUTE } from '../utils/consts'; 
+import {DASHBOARD_ROUTE, REGISTRATION_ROUTE } from '../utils/consts'; 
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -46,6 +46,8 @@ const LoginPage = observer(() => {
 			if (data.status){
 				user.setIsAuth(true);
 				user.setUser(data.user);
+				user.setKnow(data.know)
+				user.setLearn(data.learn)
 				localStorage.setItem("token", data.token)
 				history.push(DASHBOARD_ROUTE);
 			}else{
