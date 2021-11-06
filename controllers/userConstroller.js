@@ -63,18 +63,21 @@ class UserController {
 		if (!token){
 			res.json({status: false})
 		}
-		const decoded = jwt.verify(token, process.env.SECRET_KEY)
-		if (decoded){
-			const userDB = await User.findOne({email: email})
-			const user = {
-				token: token,
-				id: userDB._id,
-				email: userDB.email,
-				name: userDB.name,
-				password: password
+		jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
+			if (err){
+				res.status(500).json({})
+			}else{
+				const userDB = await User.findOne({email: email})
+				const user = {
+					token: token,
+					id: userDB._id,
+					email: userDB.email,
+					name: userDB.name,
+					password: password
+				}
+				res.status(200).json({status: true, user: user, know: userDB.know, learn: userDB.learn})
 			}
-			res.json({status: true, user: user, know: userDB.know, learn: userDB.learn})
-		}
+		});
 	}
 
 	async edit(req, res){
@@ -89,7 +92,7 @@ class UserController {
 				const token = jwt.sign(
 					{id: user._id, email: new_email, name: new_name, password: new_password},
 					process.env.SECRET_KEY,
-					{expiresIn: '12h'});
+					{expiresIn: '5s'});
 				const newUser = {
 					token: token,
 					name: new_name,

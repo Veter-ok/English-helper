@@ -1,6 +1,6 @@
 import {useState, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {Grid, Paper, Button, TextField, Container, CircularProgress, Fab, Tooltip} from '@material-ui/core';
+import {Grid, Paper, Button, TextField, Container, CircularProgress, Typography, Fab, Tooltip} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Header from '../components/header';
 import { AuthContext } from '../index';
@@ -40,16 +40,13 @@ export const Vacabulary = () => {
 	const {user} = useContext(AuthContext);
 	const [word, setWord] = useState();
 	const [translation, setTranslation] = useState();
+	const [newWord, setNewWord] = useState(true)
 	const [statusSearch, setStatusSearch] = useState(false);
+	const [error, setError] = useState();
+	const [statusAdd, setStatusAdd] = useState(false)
 	const [complexity, setComplexity] = useState();
 
 	const classes = useStyles();
-
-	const validator = (event) => {
-		var i = event.target.value
-		i = i.replace(/[^A-Za-z]/g, '')
-		setWord(i)
-	}
 
 	const searchWord = async (event) => {
 		event.preventDefault();
@@ -63,18 +60,30 @@ export const Vacabulary = () => {
 				"to": "ru"
 			})
 		}).then(json => {
-			return json.json()
+			if (json.ok){
+				return json.json()
+			}else{
+				throw new Error('Network response was not ok');
+			}
 		}).then(data => {
+			if (word in user.know){
+				setNewWord(false)
+			}else{
+				setNewWord(true)
+			}
 			setComplexity((String(word).length * 10 / 15).toFixed(1));
+			setError("")
 			setTranslation(data.msg);
 			setStatusSearch(false);
-		})
-		.catch(error => console.log(error));
+		}).catch(error => {
+			setStatusSearch(false);
+			setError(error)
+		});
 	}
 
 	const know = async (event) => {
 		event.preventDefault()
-		alert(word)
+		setStatusAdd(true)
 		await fetch(process.env.REACT_APP_API_URL + '/vacabulary/add_know', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
@@ -88,12 +97,14 @@ export const Vacabulary = () => {
 		.then(data => {
 			if (data.status){
 				user.setKnow(data.words)
+				setStatusAdd(false)
 			}
 		})	
 	}
 
 	const learn = async (event) => {
 		event.preventDefault()
+		setStatusAdd(true)
 		await fetch(process.env.REACT_APP_API_URL + '/vacabulary/add_learn', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
@@ -107,6 +118,7 @@ export const Vacabulary = () => {
 		.then(data => {
 			if (data.status){
 				user.setLearn(data.words)
+				setStatusAdd(false)
 			}
 		})	
 	}
@@ -117,12 +129,20 @@ export const Vacabulary = () => {
 				<Container className={classes.root} maxWidth="sm">
 					<Paper className={classes.paper}>
 						<div className={classes.inputBox} >
-							<TextField required fullWidth className={classes.inputText} id="standard-required" label="Required" value={word} onChange={validator}/>
+							<TextField required fullWidth className={classes.inputText} id="standard-required" label="Required" value={word} onChange={(event) => setWord(event.target.value.replace(/[^A-Za-z]/g, ''))}/>
 							<Button onClick={searchWord} className={classes.buttonTransalte} variant="contained"style={{fontSize: 12}}>Перевести</Button>
 						</div>
 						{
 							statusSearch ?
 							<CircularProgress color="secondary" />
+							:
+							<div></div>
+						}
+						{
+							error ?
+							<Typography>
+								{error}
+							</Typography>
 							:
 							<div></div>
 						}
@@ -136,16 +156,23 @@ export const Vacabulary = () => {
 					<Grid container spacing={3}>
 						<Grid item xs={12} sm={8}>
 							<Paper className={classes.translatePaper}>
-								<h2>Перевод</h2> 
-								<p>{translation}</p>
-								<Button variant="contained" color="secondary" onClick={learn} className={classes.button_style_1}>Учить</Button>
-              					{/* {
-									statusProcess ?
+								<h2>{translation}</h2>
+								{
+									newWord ?
+									<div>
+										<Button variant="contained" color="secondary" onClick={learn} className={classes.button_style_1}>Учить</Button>
+										<Button variant="contained" color="primary" onClick={know} className={classes.button_style_2}>Знаю</Button>
+									</div>
+									:
+									<h4>Вы знаете это слово <span>&#9989;</span></h4>
+								}
+								{
+									statusAdd ?
 									<CircularProgress className={classes.circularProgress}  color="secondary" />
 									:
 									<div></div>
-	            				} */}
-              					<Button variant="contained" color="primary" onClick={know} className={classes.button_style_2}>Знаю</Button>
+	            				}
+								{/* большая кнопка плюс */}
 								{/* <Tooltip title="Add" aria-label="add">
         							<Fab color="primary" className={classes.fab} onClick={addWord}>
           								<AddIcon />

@@ -34,6 +34,7 @@ const LoginPage = observer(() => {
 
 	const logIn = async (event) => {
 		event.preventDefault();
+		console.log('click1')
 		await fetch(process.env.REACT_APP_API_URL + '/user/login', {
 				method: 'post',
 				headers: {'Content-Type':'application/json'},
@@ -44,6 +45,7 @@ const LoginPage = observer(() => {
 		}).then(res =>  res.json())
 		.then(data => {
 			if (data.status){
+				console.log('click2')
 				user.setIsAuth(true);
 				user.setUser(data.user);
 				user.setKnow(data.know)

@@ -5,7 +5,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { AuthContext } from '../index';
 import {observer} from 'mobx-react-lite'
 import { NavLink } from 'react-router-dom';
-import { ABOUT_ROUTE, DASHBOARD_ROUTE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, VOCABULARY_ROUTE } from '../utils/consts';
+import { ABOUT_ROUTE, DASHBOARD_ROUTE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, TEST_ROUTE, VOCABULARY_ROUTE } from '../utils/consts';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +50,7 @@ const Header = observer((props) => {
 					<Typography variant="h6" className={classes.title}>
 						{user.isAuth ?
 							<ul className="menu-bar">
-								<li className={classes.links}><NavLink className={classes.test} to={ABOUT_ROUTE}>About</NavLink></li>
+								<li className={classes.links}><NavLink className={classes.test} to={TEST_ROUTE}>Test</NavLink></li>
 								<li className={classes.links}><NavLink className={classes.test} to={VOCABULARY_ROUTE}>Vocabulary</NavLink></li>
 								<li className={classes.links}><NavLink className={classes.test} to={DASHBOARD_ROUTE}>Dashboard</NavLink></li>
 								<li className={classes.links}><NavLink className={classes.test} to={PROFILE_ROUTE}>Account</NavLink></li>

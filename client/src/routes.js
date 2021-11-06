@@ -3,8 +3,9 @@ import ProfilePage from './pages/Profile';
 import LoginPage from './pages/Login';
 import {RegisterPage} from './pages/Register';
 import WelcomePage from './pages/Welcome'; 
-import { Vacabulary } from './pages/Vocabulary';
-import { ABOUT_ROUTE, ADMIN_ROUTE, DASHBOARD_ROUTE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, VOCABULARY_ROUTE} from "./utils/consts";
+import {TestPage} from './pages/Test'; 
+import {Vacabulary} from './pages/Vocabulary';
+import {ABOUT_ROUTE, ADMIN_ROUTE, DASHBOARD_ROUTE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, VOCABULARY_ROUTE, TEST_ROUTE} from "./utils/consts";
 
 export const authRoutes = [
 	{
@@ -20,8 +21,8 @@ export const authRoutes = [
 		Component: ProfilePage
 	},
 	{
-		path: ABOUT_ROUTE,
-		Component: WelcomePage
+		path: TEST_ROUTE,
+		Component: TestPage
 	},
 	{
 		path: VOCABULARY_ROUTE,
