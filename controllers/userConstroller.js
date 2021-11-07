@@ -86,13 +86,12 @@ class UserController {
 			return res.json({status: false, msg: 'имя, email и пароль обязательно заполнены'})
 		}else{
 			const user = await User.findOne({name: name, email: email})
-			console.log(user)
 			const hashPassword = await bcrypt.hash(new_password, 5);
 			User.updateOne({name: name, email: email, password: user.password}, {name: new_name, email: new_email, password: hashPassword}, function(err, result) {
 				const token = jwt.sign(
 					{id: user._id, email: new_email, name: new_name, password: new_password},
 					process.env.SECRET_KEY,
-					{expiresIn: '5s'});
+					{expiresIn: '12h'});
 				const newUser = {
 					token: token,
 					name: new_name,

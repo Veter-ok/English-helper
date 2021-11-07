@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Grid, Paper, Button, TextField, Container, CircularProgress, Typography, Fab, Tooltip} from '@material-ui/core';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Header from '../components/header';
+import axios from 'axios';
 import { AuthContext } from '../index';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,7 +43,6 @@ export const Vacabulary = () => {
 	const [translation, setTranslation] = useState();
 	const [newWord, setNewWord] = useState(true)
 	const [statusSearch, setStatusSearch] = useState(false);
-	const [error, setError] = useState();
 	const [statusAdd, setStatusAdd] = useState(false)
 	const [complexity, setComplexity] = useState();
 
@@ -60,76 +60,48 @@ export const Vacabulary = () => {
 	const searchWord = async (event) => {
 		event.preventDefault();
 		setStatusSearch(true);
-		await fetch(process.env.REACT_APP_API_URL + '/vacabulary/search', {
-			method: 'post',
-			headers: {'Content-Type':'application/json'},
-			body: JSON.stringify({
-				"word": word,
-				"from": "en",
-				"to": "ru"
-			})
-		}).then(json => {
-			if (json.ok){
-				return json.json()
-			}else{
-				throw new Error('Network response was not ok');
-			}
-		}).then(data => {
-			if (word in user.know){
+		axios.post('/api/vacabulary/search', {
+			"word": word,
+		 	"from": "en",
+			"to": "ru"
+		}).then(response => {
+			if (response.data.msg in user.know){
 				setNewWord(false)
 			}else{
 				setNewWord(true)
 			}
-			setComplexity((String(word).length * 10 / 15).toFixed(1));
-			setError("")
-			setTranslation(data.msg);
+			setComplexity((String(response.data.msg).length * 10 / 15).toFixed(1));
+			setTranslation(response.data.msg);
 			setStatusSearch(false);
-		}).catch(error => {
-			setStatusSearch(false);
-			setError(error)
-		});
+		}).catch(error => console.error(error))
 	}
 
 	const know = async (event) => {
 		event.preventDefault()
 		setStatusAdd(true)
-		await fetch(process.env.REACT_APP_API_URL + '/vacabulary/add_know', {
-			method: 'post',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({
-				"word": word,
-				"translation": translation,
-				"user": user.user,
-				"words": user.know
-			})
-		}).then(json => json.json())
-		.then(data => {
-			if (data.status){
-				user.setKnow(data.words)
-				setStatusAdd(false)
-			}
-		})	
+		axios.post('/api/vacabulary/add_know', {
+			"word": word,
+			"translation": translation,
+			"user": user.user,
+			"words": user.know
+		}).then(response => {
+			user.setKnow(response.data.words)
+			setStatusAdd(false)
+		}).catch(error => {console.log(error)})	
 	}
 
 	const learn = async (event) => {
 		event.preventDefault()
 		setStatusAdd(true)
-		await fetch(process.env.REACT_APP_API_URL + '/vacabulary/add_learn', {
-			method: 'post',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({
-				"word": word,
-				"translation": translation,
-				"user": user.user,
-				"words": user.learn
-			})
-		}).then(json => json.json())
-		.then(data => {
-			if (data.status){
-				user.setLearn(data.words)
-				setStatusAdd(false)
-			}
-		})	
+		axios.post('/api/vacabulary/add_learn', {
+			"word": word,
+			"translation": translation,
+	 		"user": user.user,
+	 		"words": user.learn
+		}).then(response => {
+			user.setLearn(response.data.words)
+			setStatusAdd(false)
+		}).catch(error => {console.log(error)})		
 	}
 
 	return(
@@ -144,14 +116,6 @@ export const Vacabulary = () => {
 						{
 							statusSearch ?
 							<CircularProgress color="secondary" />
-							:
-							<div></div>
-						}
-						{
-							error ?
-							<Typography>
-								{error}
-							</Typography>
 							:
 							<div></div>
 						}

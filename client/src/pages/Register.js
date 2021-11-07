@@ -5,6 +5,7 @@ import {Paper, Button, TextField, Container} from '@material-ui/core';
 import { observer } from 'mobx-react-lite';
 import Header from '../components/header';
 import { LOGIN_ROUTE } from '../utils/consts';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -32,27 +33,20 @@ export const RegisterPage = observer(() => {
 
 	const registration = async (event) => {
 		event.preventDefault();
-		fetch(process.env.REACT_APP_API_URL + '/user/reg', {
-			method: 'post',
-			headers: {'Content-Type':'application/json'},
-			body: JSON.stringify({
-				'name' : name,
-				'email' : email,
-				'password' : password,
-				'password2' : password2
-			})
-		}).then(res => {
-			return res.json()
-		})
-		.then(data => {
-			if (data.status){
-				history.push(LOGIN_ROUTE);
-			}else{
-				setErrorMsg(data.msg);
+		axios.post('/api/user/reg', {
+			'name' : name,
+			'email' : email,
+	 		'password' : password,
+	 		'password2' : password2
+		}).then(response => {
+			if (response.data.status){
+		 		history.push(LOGIN_ROUTE);
+		 	}else{
+		 		setErrorMsg(response.data.msg);
 			}
-		})
-		.catch(error => console.log(error));	
+		}).catch(error => {console.log(error)})
 	}
+	
 	return(
 		<div>
 			<Header title="Регистрация"></Header>

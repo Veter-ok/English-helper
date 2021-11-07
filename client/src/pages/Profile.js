@@ -5,6 +5,7 @@ import {Paper, Button, Grid, TextField, Typography, OutlinedInput, InputAdornmen
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Avatar from '@material-ui/core/Avatar';
+import axios from 'axios';
 import { AuthContext } from '../index';
 import { observer } from 'mobx-react-lite';
 
@@ -72,29 +73,21 @@ const ProfilePage = observer(() => {
   const save = async (event) => {
     event.preventDefault();
     setStatusProcess(true)
-    await fetch(process.env.REACT_APP_API_URL + '/user/edit_user', {
-			method: 'post',
-			headers: {'Content-Type':'application/json'},
-			body: JSON.stringify({
-        "name": user.user.name,
-				"email": user.user.email,
-				"password": user.user.password,
-        "new_name": name,
-				"new_email": email,
-				"new_password": password
-			})
-			}).then(res => {
-				return res.json()
-				})
-			.then(data => {
-        if (data.status){
-          user.setUser(data.user);
-          localStorage.removeItem('token')
-          localStorage.setItem("token", data.user.token)
-          setStatusProcess(false);
-        }
-			})
-			.catch(error => console.log(error));
+    axios.post('/api/user/edit_user', {
+      "name": user.user.name,
+	 		"email": user.user.email,
+	 		"password": user.user.password,
+      "new_name": name,
+	 		"new_email": email,
+	 		"new_password": password
+    }).then(response => {
+      if (response.data.status){
+         user.setUser(response.data.user);
+         localStorage.removeItem('token')
+         localStorage.setItem("token", response.data.user.token)
+         setStatusProcess(false);
+      }
+    }).catch(error => console.log(error));
   }
 
   return (

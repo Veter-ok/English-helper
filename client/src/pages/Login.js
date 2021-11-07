@@ -5,6 +5,7 @@ import Header from '../components/header';
 import { AuthContext } from '../index';
 import {useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import axios from 'axios';
 import {DASHBOARD_ROUTE, REGISTRATION_ROUTE } from '../utils/consts'; 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,29 +35,23 @@ const LoginPage = observer(() => {
 
 	const logIn = async (event) => {
 		event.preventDefault();
-		console.log('click1')
-		await fetch(process.env.REACT_APP_API_URL + '/user/login', {
-				method: 'post',
-				headers: {'Content-Type':'application/json'},
-				body: JSON.stringify({
-					"email": email,
-					"password": password
-				})
-		}).then(res =>  res.json())
-		.then(data => {
-			if (data.status){
-				console.log('click2')
+		axios.post('/api/user/login', {
+			"email": email,
+			"password": password
+		}).then(response => {
+			if (response.status){
 				user.setIsAuth(true);
-				user.setUser(data.user);
-				user.setKnow(data.know)
-				user.setLearn(data.learn)
-				localStorage.setItem("token", data.token)
+				user.setUser(response.data.user);
+				user.setKnow(response.data.know)
+				user.setLearn(response.data.learn)
+				localStorage.setItem("token", response.data.token)
 				history.push(DASHBOARD_ROUTE);
 			}else{
-				setErrorMsg(data.msg);
+				setErrorMsg(response.data.msg);
 			}
 		}).catch(error => console.log(error));
 	}
+	
 	return (
 		<div>
 			<Header title="Login"></Header>
