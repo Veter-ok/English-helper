@@ -25,18 +25,14 @@ export const App = observer(() => {
           }else{
             throw new Error('Network response was not ok');
           }
-        })
-        .then(data => {
+        }).then(data => {
           user.setIsAuth(true);
           user.setUser(data.user);
           user.setKnow(data.know);
           user.setLearn(data.learn)
-        })
-        .catch(error => {
+        }).catch(error => {
           user.setIsAuth(false);
         });
-    }else{
-      
     }
   }, [])
 

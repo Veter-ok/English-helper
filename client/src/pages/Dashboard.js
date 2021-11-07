@@ -64,7 +64,6 @@ export const DashboardPage = observer(() => {
                     <Paper key={key} className={classes.words_block}>
                       <Typography className={classes.img_text}>
                         {key} - {user.know[key]}
-                        {/* {console.log("ok")} */}
                       </Typography>
                       <Button variant="contained" color="secondary" className={classes.button}>Удалить</Button>
                     </Paper>

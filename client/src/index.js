@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import {App} from './App';
 import UserStore from './store/UserStore';
 import {createContext} from 'react';

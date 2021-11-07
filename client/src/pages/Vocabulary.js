@@ -1,7 +1,7 @@
 import {useState, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Grid, Paper, Button, TextField, Container, CircularProgress, Typography, Fab, Tooltip} from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Header from '../components/header';
 import { AuthContext } from '../index';
 
@@ -47,6 +47,15 @@ export const Vacabulary = () => {
 	const [complexity, setComplexity] = useState();
 
 	const classes = useStyles();
+
+	function speak(text){
+		let speech = new SpeechSynthesisUtterance();
+		speech.lang = "en";
+		speech.text = text;
+		let voices = window.speechSynthesis.getVoices()
+		speech.voice = voices[0];
+ 		window.speechSynthesis.speak(speech);
+	}
 
 	const searchWord = async (event) => {
 		event.preventDefault();
@@ -129,7 +138,7 @@ export const Vacabulary = () => {
 				<Container className={classes.root} maxWidth="sm">
 					<Paper className={classes.paper}>
 						<div className={classes.inputBox} >
-							<TextField required fullWidth className={classes.inputText} id="standard-required" label="Required" value={word} onChange={(event) => setWord(event.target.value.replace(/[^A-Za-z]/g, ''))}/>
+							<TextField required fullWidth className={classes.inputText} id="standard-required" label="Required" value={word} onChange={(event) => setWord(event.target.value.replace(/[^A-Za-z-]/g, ''))}/>
 							<Button onClick={searchWord} className={classes.buttonTransalte} variant="contained"style={{fontSize: 12}}>Перевести</Button>
 						</div>
 						{
@@ -157,11 +166,16 @@ export const Vacabulary = () => {
 						<Grid item xs={12} sm={8}>
 							<Paper className={classes.translatePaper}>
 								<h2>{translation}</h2>
+								<Tooltip title="Play" aria-label="play">
+									<Fab color="primary" onClick={() => {speak(word)}}>
+										<PlayCircleOutlineIcon/>
+        							</Fab>
+      							</Tooltip>
 								{
 									newWord ?
 									<div>
-										<Button variant="contained" color="secondary" onClick={learn} className={classes.button_style_1}>Учить</Button>
-										<Button variant="contained" color="primary" onClick={know} className={classes.button_style_2}>Знаю</Button>
+										<Button variant="contained" color="secondary" onClick={learn} >Учить</Button>
+										<Button variant="contained" color="primary" onClick={know}>Знаю</Button>
 									</div>
 									:
 									<h4>Вы знаете это слово <span>&#9989;</span></h4>
