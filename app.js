@@ -16,6 +16,10 @@ app.use(express.json({limit: "30mb", extended: true}));
 // Routes
 app.use('/api', require('./routes/routes'))
 
+if (process.env.NODE_ENV === "production"){
+    app.use(express.static('client/build'))
+}
+
 // MongoDB
 async function start() {
     try{
