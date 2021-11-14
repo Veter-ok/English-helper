@@ -1,7 +1,9 @@
 // "dev": "concurrently \"npm run server\" \"npm run client\""
 const express = require('express');
+const path = require('path')
 const cors = require('cors');
 const mongoose = require('mongoose');
+const { dirname } = require('path');
 require('dotenv').config();
 
 const port = process.env.PORT || 5000;
@@ -17,7 +19,14 @@ app.use(express.json({limit: "30mb", extended: true}));
 app.use('/api', require('./routes/routes'))
 
 if (process.env.NODE_ENV === "production"){
-    app.use(express.static('client/build'))
+    app.use(express.static(path.join(__dirname, '/client/build')))
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+    });
+}else{
+    app.get('/', (req, res) => {
+        res.send("API running!")
+    });
 }
 
 // MongoDB
