@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
+    "build": "cd client && npm run build",
     "start-build": "node app.js",
     "install-client": "cd client && npm install",
     "client": "npm run start --prefix client",
