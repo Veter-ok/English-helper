@@ -4,10 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build",
-    "client": "npm run start --prefix client"
+    "start": "nodemon app.js",
+    "client": "npm run start --prefix client",
+    "react": "npm start --prefix client",
+    "dev": "concurrently \"npm run start\" \"npm run react\"",
+    "heroku": "concurrently \"npm run app.js\" \"npm run react\""
   },
   "repository": {
     "type": "git",
@@ -22,11 +23,13 @@
   "dependencies": {
     "@vitalets/google-translate-api": "^7.0.0",
     "bcrypt": "^5.0.1",
+    "concurrently": "^6.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
-    "mongoose": "^5.11.15"
+    "mongoose": "^5.11.15",
+    "npm": "^8.1.3"
   }
 }
