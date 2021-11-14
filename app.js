@@ -28,8 +28,7 @@ async function start() {
             useNewUrlParser: true, 
             useCreateIndex: true})
         console.log('Succes connection with MongoDB')
-        // Start server 127.0.0.1
-        app.listen(port, '127.0.0.1', () => {
+        app.listen(port, '0.0.0.0', () => {
             console.log(`Run server in port ${port}`);
         });
     }catch(error){
