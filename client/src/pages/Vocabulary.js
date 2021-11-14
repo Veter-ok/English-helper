@@ -60,7 +60,7 @@ export const Vacabulary = () => {
 	const searchWord = async (event) => {
 		event.preventDefault();
 		setStatusSearch(true);
-		axios.post('/api/vacabulary/search', {
+		axios.post('/api/vocabulary/search', {
 			"word": word,
 		 	"from": "en",
 			"to": "ru"
@@ -79,7 +79,7 @@ export const Vacabulary = () => {
 	const know = async (event) => {
 		event.preventDefault()
 		setStatusAdd(true)
-		axios.post('/api/vacabulary/add_know', {
+		axios.post('/api/vocabulary/add_know', {
 			"word": word,
 			"translation": translation,
 			"user": user.user,
@@ -93,7 +93,7 @@ export const Vacabulary = () => {
 	const learn = async (event) => {
 		event.preventDefault()
 		setStatusAdd(true)
-		axios.post('/api/vacabulary/add_learn', {
+		axios.post('/api/vocabulary/add_learn', {
 			"word": word,
 			"translation": translation,
 	 		"user": user.user,
@@ -110,7 +110,8 @@ export const Vacabulary = () => {
 				<Container className={classes.root} maxWidth="sm">
 					<Paper className={classes.paper}>
 						<div className={classes.inputBox} >
-							<TextField required fullWidth className={classes.inputText} id="standard-required" label="Required" value={word} onChange={(event) => setWord(event.target.value.replace(/[^A-Za-z-]/g, ''))}/>
+							{/* <TextField required fullWidth className={classes.inputText} id="standard-required" label="Required" value={word} onChange={(event) => setWord(event.target.value.replace(/[^A-Za-z-]/g, ''))}/> */}
+							<TextField required fullWidth className={classes.inputText} id="standard-required" label="Required" value={word} onChange={(event) => setWord(event.target.value)}/>
 							<Button onClick={searchWord} className={classes.buttonTransalte} variant="contained"style={{fontSize: 12}}>Перевести</Button>
 						</div>
 						{

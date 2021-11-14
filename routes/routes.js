@@ -7,8 +7,10 @@ router.post('/user/login', userConstroller.login)
 router.post('/user/reg', userConstroller.registration)
 router.post('/user/edit_user', userConstroller.edit)
 router.post('/user/auth', userConstroller.check)
-router.post('/vacabulary/search', vacabularyConstroller.search_word)
-router.post('/vacabulary/add_know', vacabularyConstroller.add_know)
-router.post('/vacabulary/add_learn', vacabularyConstroller.add_learn)
+router.post('/vocabulary/search', vacabularyConstroller.search_word)
+router.post('/vocabulary/add_know', vacabularyConstroller.add_know)
+router.post('/vocabulary/add_learn', vacabularyConstroller.add_learn)
+router.post('/vocabulary/delete-learn', vacabularyConstroller.delete_learn)
+router.post('/vocabulary/delete-know', vacabularyConstroller.delete_know)
 
 module.exports = router

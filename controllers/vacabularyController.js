@@ -37,6 +37,24 @@ class Vacabulary {
 			return res.json({status: true, words: new_words})
 		});
 	}
+
+	async delete_learn(req, res){
+		const {words, _id} = req.body
+		User.updateOne({_id: _id}, {learn: words}, (err, result) => {
+			if (err) return res.json({status: false, msg: err})
+			return res.json({status: true, msg: 'ok'})
+		});
+	}
+
+	async delete_know(req, res){
+		const {words, id} = req.body
+		console.log(req.body, id)
+		User.updateOne({_id: id}, {know: word}, (err, result) => {
+			if (err) return res.json({status: false, msg: err})
+			console.log(result)
+			return res.json({status: true, msg: 'ok'})
+		});
+	}
 }
 
 module.exports = new Vacabulary();

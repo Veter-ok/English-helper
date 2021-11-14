@@ -3,6 +3,7 @@ import Header from '../components/header';
 import { makeStyles } from '@material-ui/core/styles';
 import {Paper, Button, Grid, Typography, List} from '@material-ui/core';
 import { AuthContext } from '../index';
+import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +52,31 @@ export const DashboardPage = observer(() => {
   const {user} = useContext(AuthContext);
   const classes = useStyles();
 
+  const deleteWordLern = async (word) => {
+    console.log(user.learn[word])
+    delete user.learn[word];
+    console.log(Object.keys(user.learn))
+    axios.post('/api/vocabulary/delete-learn', {
+	 		"words": user.learn,
+      "_id": user.user.id
+    }).then(response => {
+      console.log(response);
+    }).catch(error => {console.log(error)})
+  }
+
+  const deleteWordKnow = async (word) => {
+    delete user.know[word];
+    console.log(user.id, user.user.id)
+    axios.post('/api/vocabulary/delete-know', {
+	 		"words": user.know,
+      "id": user.user.id
+    }).then(response => {
+      console.log(response);
+      console.log(Object.keys(user.know))
+    }).catch(error => {console.log(error)})
+  }
+
+
   return (
     <div>
       <Header title="Dashboard"></Header>
@@ -65,7 +91,7 @@ export const DashboardPage = observer(() => {
                       <Typography className={classes.img_text}>
                         {key} - {user.know[key]}
                       </Typography>
-                      <Button variant="contained" color="secondary" className={classes.button}>Удалить</Button>
+                      <Button key={key} variant="contained" color="secondary" className={classes.button} onClick={() => {deleteWordKnow(key)}}>Удалить</Button>
                     </Paper>
                   ))}
               </List>
@@ -79,7 +105,7 @@ export const DashboardPage = observer(() => {
                     <Typography className={classes.img_text}>
                       {key} - {user.learn[key]}
                     </Typography>
-                    <Button variant="contained" color="secondary" className={classes.button}>Удалить</Button>
+                    <Button variant="contained" key={key} color="secondary" className={classes.button} onClick={() => {deleteWordLern(key)}}>Удалить</Button>
                   </Paper>
                 ))
               }
