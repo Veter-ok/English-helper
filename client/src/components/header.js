@@ -1,12 +1,27 @@
 import React from 'react';
 import { useContext } from 'react';
-import {Toolbar, AppBar, Typography, IconButton} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import {Toolbar, AppBar, Typography, IconButton, Menu, MenuItem} from '@material-ui/core';
+import MoreVertIcon from '@material-ui/icons/Menu';
 import { AuthContext } from '../index';
 import {observer} from 'mobx-react-lite'
 import { NavLink } from 'react-router-dom';
 import { ABOUT_ROUTE, DASHBOARD_ROUTE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, TEST_ROUTE, VOCABULARY_ROUTE } from '../utils/consts';
 import { makeStyles } from '@material-ui/core/styles';
+
+const options = [
+	'Test',
+	'Vocabulary',
+	'Dashboard',
+	'Account'
+];
+
+const NAV = {
+	'Test': TEST_ROUTE,
+	'Vocabulary': VOCABULARY_ROUTE,
+	'Dashboard': DASHBOARD_ROUTE,
+	'Account': PROFILE_ROUTE
+}
+  
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -20,8 +35,27 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 	},
 	links: {
-		marginLeft: 100,
-		display: 'inline-block'
+		listStyleType: 'none',
+		[theme.breakpoints.only('xl')]: {
+			backgroundColor: 'red',
+			marginLeft: 150,
+			display: 'inline-block'
+		},
+		[theme.breakpoints.only('lg')]: {
+			marginLeft: 100,
+			display: 'inline-block'
+		},
+		[theme.breakpoints.only('md')]: {
+			marginLeft: 50,
+			display: 'inline-block'
+		},
+		[theme.breakpoints.only('sm')]: {
+			marginLeft: 10,
+			display: 'inline-block'
+		},
+		[theme.breakpoints.only('xs')]: {
+			marginLeft: 10,
+		},
 	},
 	test: {
 		color: 'white',
@@ -29,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
 		textDecoration: 'none',
 		padding: 10,
 		borderRadius: 10
+	},
+	nav_link_2: {
+		color: 'black',
+		textDecoration: 'none'
 	}
   }));
   
@@ -36,14 +74,44 @@ const useStyles = makeStyles((theme) => ({
 const Header = observer((props) => {
 	const {user} = useContext(AuthContext);
 	const classes = useStyles();
+	const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = (option) => {
+		setAnchorEl(null);
+	};
 
 	return (
 		<div>
 			<AppBar position="static">
 				<Toolbar>
-					<IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-						<MenuIcon />
-					</IconButton>
+					<IconButton aria-label="more" id="long-button" aria-controls="long-menu" aria-expanded={open ? 'true' : undefined} aria-haspopup="true" onClick={handleClick}>
+                    	<MoreVertIcon/>
+      				</IconButton>
+     				<Menu id="long-menu"
+        				MenuListProps={{'aria-labelledby': 'long-button'}}
+        				anchorEl={anchorEl}
+        				open={open}
+        				onClose={handleClose}
+						PaperProps={{
+							style: {
+								maxHeight: 48 * 4.5,
+								width: '20ch',
+							},
+						}}
+     				>
+						{options.map((option) => (
+							<MenuItem key={option} selected={option === 'Pyxis'} onClick={() => handleClose(option)}>
+								<NavLink to={NAV[option]} className={classes.nav_link_2}>
+									{option}
+								</NavLink>
+							</MenuItem>
+						))}
+					</Menu>
 					<Typography variant="h6" className={classes.title}>
 						{props.title}
 					</Typography>

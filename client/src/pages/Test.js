@@ -18,9 +18,21 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: 20,
 	}, 
 	card: {
-		minWidth: '25%',
-		marginLeft: '37.5%',
-		marginRight: '37.5%',
+		[theme.breakpoints.only('lg')]: {
+			minWidth: '25%',
+			marginLeft: '37.5%',
+			marginRight: '37.5%',
+		},
+		[theme.breakpoints.only('md')]: {
+			minWidth: '50%',
+			marginLeft: '25%',
+			marginRight: '25%',
+		},
+		[theme.breakpoints.only('sm')]: {
+			minWidth: '70%',
+			marginLeft: '15%',
+			marginRight: '15%',
+		},
 	},
 	box: {
 		backgroundColor: '#3f51b5',
