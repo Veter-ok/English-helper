@@ -91,7 +91,8 @@ export const TestPage = observer(() => {
 		speech.lang = "en";
 		speech.text = text;
 		let voices = window.speechSynthesis.getVoices()
-		speech.voice = voices[0];
+		console.log(voices)
+		speech.voice = voices[1];
  		window.speechSynthesis.speak(speech);
 	}
 
