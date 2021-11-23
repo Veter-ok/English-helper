@@ -50,10 +50,10 @@ export const Vacabulary = () => {
 
 	function speak(text){
 		let speech = new SpeechSynthesisUtterance();
-		speech.lang = "en";
+		speech.lang = "en-US";
 		speech.text = text;
 		let voices = window.speechSynthesis.getVoices()
-		speech.voice = voices[0];
+		//speech.voice = voices[0];
  		window.speechSynthesis.speak(speech);
 	}
 

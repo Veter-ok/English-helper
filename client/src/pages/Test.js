@@ -79,7 +79,6 @@ export const TestPage = observer(() => {
 					index = getRandomInt(Object.keys(user.learn).length)
 					key = Object.keys(user.learn)[index]
 				}while (answers.indexOf(user.learn[key]) !== -1 || user.learn[key] === correct)
-				console.log(index, key)
 				answers.push(user.learn[key])
 			}
 		}
@@ -88,11 +87,11 @@ export const TestPage = observer(() => {
 
 	function speak(text){
 		let speech = new SpeechSynthesisUtterance();
-		speech.lang = "en";
+		speech.lang = "en-US";
 		speech.text = text;
 		let voices = window.speechSynthesis.getVoices()
 		console.log(voices)
-		speech.voice = voices[1];
+		//speech.voice = voices[1];
  		window.speechSynthesis.speak(speech);
 	}
 
