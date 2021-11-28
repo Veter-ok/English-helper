@@ -1,16 +1,14 @@
 import {useContext} from 'react';
 import Header from '../components/header';
+import Footer from '../components/footer';
 import { makeStyles } from '@material-ui/core/styles';
 import {Paper, Button, Grid, Typography, List} from '@material-ui/core';
 import { AuthContext } from '../index';
 import axios from 'axios';
 import { observer } from 'mobx-react-lite';
+import './dashboard.css'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: 30,
-    flexGrow: 1,
-  },
   paper: {
     position: 'relative',
     color: theme.palette.text.secondary,
@@ -44,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   words_block: {
     margin: 10,
     padding: 10,
-    backgroundColor: "#c4ecff"
+    backgroundColor: "#ececec"
   }
 }));
 
@@ -80,7 +78,7 @@ export const DashboardPage = observer(() => {
   return (
     <div>
       <Header title="Dashboard"></Header>
-      <div className={classes.root}>
+      <div className="content">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <Paper elevation={5} className={classes.paper} >
@@ -113,6 +111,7 @@ export const DashboardPage = observer(() => {
           </Grid>
         </Grid>
       </div>
+      <Footer></Footer>
     </div>
   );
 })

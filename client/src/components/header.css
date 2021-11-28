@@ -1,0 +1,64 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	border-bottom: 1px solid #ccc;
+    padding: .5em 1em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo h1 {
+	margin: .6em 0;
+	display: inline-block;
+}
+
+.links a {
+	padding: 10px;
+	border-radius: 15px;
+	text-decoration: none;
+	color: #000;
+}
+
+.menu-bar { 
+	padding: .5em 1em;
+	display: flex;
+	justify-content: space-between;
+}
+
+
+.menu-bar ul, 
+.menu-bar li {
+	margin: 0; 
+	padding: 0;
+}
+
+.menu-bar li {
+	display: inline-block;
+	margin: 20px;
+}
+
+.menu-bar li :hover{
+	background-color: rgb(219, 219, 219);
+}
+
+
+@media screen and (max-width: 800px) {
+	.menu-bar li {
+		margin: 20px 10px 20px 10px;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.menu-bar li {
+		margin: 20px 5px 20px 5px;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.menu-bar li {
+		margin: 20px 0px 20px 0px;
+	}
+}
