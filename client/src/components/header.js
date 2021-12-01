@@ -8,16 +8,6 @@ import { ABOUT_ROUTE, DASHBOARD_ROUTE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, R
 
 const Header = observer((props) => {
 	const {user} = useContext(AuthContext);
-	const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handleClose = (option) => {
-		setAnchorEl(null);
-	};
 
 	return (
 		<div>

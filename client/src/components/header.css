@@ -11,13 +11,20 @@ header {
 }
 
 .logo h1 {
+	font-size: 35px;
 	margin: .6em 0;
 	display: inline-block;
 }
 
+.logo {
+	display: block;
+}
+
 .links a {
 	padding: 10px;
+	margin: 5% 0px 5% 0px;
 	border-radius: 15px;
+	display: block;
 	text-decoration: none;
 	color: #000;
 }
@@ -35,30 +42,72 @@ header {
 	padding: 0;
 }
 
-.menu-bar li {
+.links {
+	font-size: 22px;
 	display: inline-block;
-	margin: 20px;
+	margin: 40px;
 }
 
-.menu-bar li :hover{
+.links :hover{
 	background-color: rgb(219, 219, 219);
 }
 
 
 @media screen and (max-width: 800px) {
-	.menu-bar li {
-		margin: 20px 10px 20px 10px;
+	.links {
+		display: inline-block;
+		font-size: 20px;
+		margin: 20px;
+	}
+	.logo h1 {
+		font-size: 30px;
 	}
 }
 
 @media screen and (max-width: 700px) {
-	.menu-bar li {
-		margin: 20px 5px 20px 5px;
+	.links {
+		display: inline-block;
+		font-size: 20px;
+		margin: 15px;
+	}
+	.logo h1 {
+		font-size: 25px;
 	}
 }
 
 @media screen and (max-width: 600px) {
-	.menu-bar li {
-		margin: 20px 0px 20px 0px;
+	.links {
+		display: inline-block;
+		font-size: 15px;
+		margin: 10px;
+	}
+	.logo h1 {
+		font-size: 20px;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.links {
+		display: inline-block;
+		font-size: 10px;
+		margin: 5px;
+	}
+	.links a {
+		padding: 5px;
+	}
+	.logo h1 {
+		font-size: 15px;
+	}
+}
+
+
+@media screen and (max-width: 500px) {
+	.links {
+		display: inline-block;
+		font-size: 8px;
+		margin: 5px;
+	}
+	.logo h1 {
+		font-size: 15px;
 	}
 }
