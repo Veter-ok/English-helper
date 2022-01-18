@@ -74,7 +74,6 @@ export const DashboardPage = observer(() => {
     }).catch(error => {console.log(error)})
   }
 
-
   return (
     <div>
       <Header title="Dashboard"></Header>

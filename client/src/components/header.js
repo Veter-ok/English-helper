@@ -9,6 +9,10 @@ import { ABOUT_ROUTE, DASHBOARD_ROUTE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, R
 const Header = observer((props) => {
 	const {user} = useContext(AuthContext);
 
+	const click = () => {
+		
+	}
+
 	return (
 		<div>
 			<header>
@@ -17,12 +21,27 @@ const Header = observer((props) => {
 				</div>
 				<div className="menu-bar">
 					{user.isAuth ?
-						<ul>
-							<li className="links"><NavLink to={TEST_ROUTE}>Test</NavLink></li>
-							<li className="links"><NavLink to={VOCABULARY_ROUTE}>Vocabulary</NavLink></li>
-							<li className="links"><NavLink to={DASHBOARD_ROUTE}>Dashboard</NavLink></li>
-							<li className="links"><NavLink to={PROFILE_ROUTE}>Account</NavLink></li>
-						</ul>
+						<div>
+							<ul>
+								<li className="links"><NavLink to={TEST_ROUTE}>Test</NavLink></li>
+								<li className="links"><NavLink to={VOCABULARY_ROUTE}>Vocabulary</NavLink></li>
+								<li className="links"><NavLink to={DASHBOARD_ROUTE}>Dashboard</NavLink></li>
+								<li className="links"><NavLink to={PROFILE_ROUTE}>Account</NavLink></li>
+							</ul>
+							<div className="burger-menu" onClick={click}>
+								<div className="line"></div>
+								<div className="line"></div>
+								<div className="line"></div>
+							</div>
+							<div className="menu">
+								<ul>
+									<li className="links-menu"><NavLink to={TEST_ROUTE}>Test</NavLink></li>
+									<li className="links-menu"><NavLink to={VOCABULARY_ROUTE}>Vocabulary</NavLink></li>
+									<li className="links-menu"><NavLink to={DASHBOARD_ROUTE}>Dashboard</NavLink></li>
+									<li className="links-menu"><NavLink to={PROFILE_ROUTE}>Account</NavLink></li>
+								</ul>
+							</div>
+						</div>
 						:
 						<ul>
 							<li className="links"><NavLink to={ABOUT_ROUTE}>About</NavLink></li>

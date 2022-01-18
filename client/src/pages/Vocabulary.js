@@ -48,13 +48,18 @@ export const Vacabulary = () => {
 
 	const classes = useStyles();
 
+	// https://webplatformcourse.com/bonus/speech-synthesis-api/
 	function speak(text){
-		let speech = new SpeechSynthesisUtterance();
-		speech.lang = "en-US";
-		speech.text = text;
+		let speech = new SpeechSynthesisUtterance(text)
+		speech.lang = "en-US"
 		let voices = window.speechSynthesis.getVoices()
-		//speech.voice = voices[0];
- 		window.speechSynthesis.speak(speech);
+		for(let i = 0; i < voices.length; i++){
+			if (voices[i].lang === "en-US" && voices[i].name === "Alex"){
+				speech.voice = voices[i]
+				break
+			}
+		}
+ 		window.speechSynthesis.speak(speech)
 	}
 
 	const searchWord = async (event) => {
@@ -130,7 +135,8 @@ export const Vacabulary = () => {
 					<Grid container spacing={3}>
 						<Grid item xs={12} sm={8}>
 							<Paper className={classes.translatePaper}>
-								<h2>{translation}</h2>
+								{/* <h2>{translation}</h2> */}
+								<TextField id="outlined-basic" label="Перевод" variant="outlined" defaultValue={translation} onChange={(e) => setTranslation(e.target.value)} className={classes.inputTextStyle}/>
 								<Tooltip title="Play" aria-label="play">
 									<Fab color="primary" onClick={() => {speak(word)}}>
 										<PlayCircleOutlineIcon/>

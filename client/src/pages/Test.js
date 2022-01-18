@@ -85,14 +85,18 @@ export const TestPage = observer(() => {
 		return answers
 	}
 
+	// https://webplatformcourse.com/bonus/speech-synthesis-api/
 	function speak(text){
-		let speech = new SpeechSynthesisUtterance();
-		speech.lang = "en-US";
-		speech.text = text;
+		let speech = new SpeechSynthesisUtterance(text)
+		speech.lang = "en-US"
 		let voices = window.speechSynthesis.getVoices()
-		console.log(voices)
-		//speech.voice = voices[1];
- 		window.speechSynthesis.speak(speech);
+		for(let i = 0; i < voices.length; i++){
+			if (voices[i].lang === "en-US" && voices[i].name === "Alex"){
+				speech.voice = voices[i]
+				break
+			}
+		}
+ 		window.speechSynthesis.speak(speech)
 	}
 
 	function generationTask(){
@@ -155,7 +159,7 @@ export const TestPage = observer(() => {
 	}
 
 	useEffect(() => {
-		generationTask();
+		generationTask()
 	}, [])
 
 	return (
