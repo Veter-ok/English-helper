@@ -1,0 +1,33 @@
+.line {
+	display: none;
+	background-color: #000;
+	margin: 6px;
+	width: 30px;
+	height: 3px;
+	z-index: 2;
+}
+
+.burger-menu {
+	display: none;
+}
+
+.burger-menu-active {
+	width: 100%;
+	left: 0;
+	top: 50px;
+	padding: 0px 5% 0px 5%;
+	position: absolute;
+	background-color: rgb(254, 254, 254);
+}
+
+.burger-menu-active ul li {
+	display: inline-block;
+}
+
+.burger-menu-active ul li a {
+	padding: 10px;
+	border-radius: 15px;
+	display: block;
+	text-decoration: none;
+	color: #000;
+}

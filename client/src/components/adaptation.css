@@ -1,0 +1,89 @@
+@media screen and (min-width: 700px) {
+	.links {
+		font-size: 20px;
+		margin: 20px;
+	}
+	.logo h1 {
+		font-size: 30px;
+	}
+	.burger-menu-active {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 700px) and (max-width: 800px) {
+	.links {
+		font-size: 20px;
+		margin: 15px;
+	}
+	.logo h1 {
+		font-size: 25px;
+	}
+	.burger-menu-active {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 600px) and (max-width: 700px) {
+	.links {
+		font-size: 15px;
+		margin: 10px;
+	}
+	.logo h1 {
+		font-size: 20px;
+	}
+	.burger-menu-active {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 500px) and (max-width: 600px) {
+	.links {
+		display: none;
+	}
+	.logo h1 {
+		font-size: 20px;
+	}
+	.line {
+		display: block;
+	}
+	.burger-menu-active {
+		display: block;
+	}
+}
+
+@media screen and (min-width: 400px) and (max-width: 500px){
+	.links {
+		display: none;
+	}
+	.logo h1 {
+		font-size: 20px;
+	}
+	.line {
+		display: block;
+	}
+	.burger-menu-active {
+		display: block;
+	}
+	.burger-menu-active ul li{
+		margin: 20px .5em 20px .5em;
+	}
+}
+
+@media screen and (max-width: 400px){
+	.links {
+		display: none;
+	}
+	.logo h1 {
+		font-size: 20px;
+	}
+	.line {
+		display: block;
+	}
+	.burger-menu-active {
+		display: block;
+	}
+	.burger-menu-active ul li{
+		margin: 20px .2em 20px .2em;
+	}
+}
