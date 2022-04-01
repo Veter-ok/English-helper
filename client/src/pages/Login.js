@@ -39,7 +39,7 @@ const LoginPage = observer(() => {
 			"email": email,
 			"password": password
 		}).then(response => {
-			if (response.status){
+			if (response.data.status){
 				user.setIsAuth(true);
 				user.setUser(response.data.user);
 				user.setKnow(response.data.know)

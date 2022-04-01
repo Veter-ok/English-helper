@@ -11,7 +11,7 @@ export const App = observer(() => {
   const {user} = useContext(AuthContext);
 
   useEffect(() => {
-    if (localStorage.getItem("token") !== null){
+    if (localStorage.getItem("token") !== null && localStorage.getItem("token") !== "undefined"){
       axios.post('/api/user/auth', {
         "token": localStorage.getItem("token"),
         "email": jwt_decode(localStorage.getItem("token")).email,
@@ -25,6 +25,8 @@ export const App = observer(() => {
         console.log(error)
         user.setIsAuth(false);
       })
+    }else{
+      console.log("eror")
     }
   }, [])
 
